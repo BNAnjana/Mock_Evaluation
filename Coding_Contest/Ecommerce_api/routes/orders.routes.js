@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
   }
 
   const order = {
-    id: Date.now(),
+    id: req.body.id,
     productId,
     quantity,
     totalAmount: product.price * quantity,
