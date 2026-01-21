@@ -1,4 +1,26 @@
 {
-  "products": [],
-  "orders": []
+  "products": [
+    {
+      "id": 1,
+      "name": "Mobile",
+      "price": 20000,
+      "stock": 12
+    },
+    {
+      "id": 2,
+      "name": "Laptop",
+      "price": 70000,
+      "stock": 20
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "productId": 1,
+      "quantity": 3,
+      "totalAmount": 60000,
+      "status": "placed",
+      "createdAt": "2026-01-21"
+    }
+  ]
 }
