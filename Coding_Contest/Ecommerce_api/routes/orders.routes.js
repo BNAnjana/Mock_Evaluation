@@ -31,3 +31,33 @@ router.post("/", (req, res) => {
   writeDB(db);
   res.status(201).json(order);
 });
+
+router.get("/", (req, res) => {
+  const db = readDB();
+  res.status(200).json(db.orders);
+});
+
+router.delete("/:orderId", (req, res) => {
+  const db = readDB();
+  const order = db.orders.find(o => o.id == req.params.orderId);
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  if (order.status === "cancelled") {
+    return res.status(400).json({ message: "Order already cancelled" });
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  if (order.createdAt !== today) {
+    return res.status(400).json({ message: "Cancellation not allowed" });
+  }
+
+  order.status = "cancelled";
+  const product = db.products.find(p => p.id === order.productId);
+  product.stock += order.quantity;
+
+  writeDB(db);
+  res.status(200).json({ message: "Order cancelled successfully" });
+});
