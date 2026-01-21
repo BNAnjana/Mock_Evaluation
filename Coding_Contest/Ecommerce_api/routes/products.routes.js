@@ -7,7 +7,7 @@ router.post("/", (req, res) => {
   const db = readDB();
 
   const newProduct = {
-    id: Date.now(),
+    id: req.body.id,
     name: req.body.name,
     price: req.body.price,
     stock: req.body.stock
