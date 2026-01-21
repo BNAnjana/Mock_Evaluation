@@ -1,6 +1,6 @@
 import fs from "fs";
 
-export const readDb = () => {
+export const readDB = () => {
     return JSON.parse(fs.readFileSync("db.json", "utf-8"));
 };
 
