@@ -61,3 +61,31 @@ router.delete("/:orderId", (req, res) => {
   writeDB(db);
   res.status(200).json({ message: "Order cancelled successfully" });
 });
+
+router.patch("/change-status/:orderId", (req, res) => {
+  const { status } = req.body;
+  const db = readDB();
+
+  const order = db.orders.find(o => o.id == req.params.orderId);
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  if (order.status === "cancelled" || order.status === "delivered") {
+    return res.status(400).json({ message: "Status change not allowed" });
+  }
+
+  const flow = ["placed", "shipped", "delivered"];
+  const currentIndex = flow.indexOf(order.status);
+
+  if (flow[currentIndex + 1] !== status) {
+    return res.status(400).json({ message: "Invalid status flow" });
+  }
+
+  order.status = status;
+  writeDB(db);
+
+  res.status(200).json(order);
+});
+
+export default router;
