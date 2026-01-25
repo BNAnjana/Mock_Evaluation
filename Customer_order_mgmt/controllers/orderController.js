@@ -1,4 +1,4 @@
-import supabase from './config/supabase.config.js';
+import supabase from '../config/supabase.config.js';
 
 // Create Order
 export const addOrder = async (req, res) => {
