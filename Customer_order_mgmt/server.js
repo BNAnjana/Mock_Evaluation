@@ -1,19 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
+import customerRoutes from './routes/customerRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
+dotenv.config();
 const app = express();
 const PORT = 3000;
+app.use(express.json());
 
- app.use((req,res) => {
-    try {
-        process.env.SUPABASE_URL,
-        process.env.SECRET_KEY
-    }catch(err){
-        res.send(500).json({message:"Something went wrong! Please try again"});
-    }
-}
- );
+app.use('/customers', customerRoutes);
+app.use('/orders', orderRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
