@@ -1,11 +1,11 @@
-import supabase from '../config/supabase.config.js';
+import supabase from './config/supabase.config.js';
 
 // Register Customer
 export const registerCustomer = async (req, res) => {
   const { full_name, email, phone } = req.body;
 
   if (!full_name || !email || !phone) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return res.status(400).json({ error: 'Missing fields' });
   }
 
   const { data: existing } = await supabase
